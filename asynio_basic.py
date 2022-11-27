@@ -2,23 +2,25 @@ import requests
 import time
 import asyncio
 import aiohttp
+from requests import session
 from aiohttp import ClientSession
 
 
-def get_api():
+def get_api(s: session):
     url = "https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8"
-    req = requests.get(url).json()
+    req = s.get(url).json()
     print(req)
 
 
 def main():
+    s = session()
     for i in range(3):
-        get_api()
+        get_api(s)
 
 
-async def aio_get_api(session: ClientSession):
+async def aio_get_api(s: ClientSession):
     url = "https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8"
-    req = await session.get(url)
+    req = await s.get(url)
     
     print(await req.json())
 
